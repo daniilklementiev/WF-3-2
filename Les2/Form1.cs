@@ -14,7 +14,7 @@ namespace Les2
         
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.Text = (DateTime.Now - timeStarted).ToString();
+            this.Text = (DateTime.Now - timeStarted).Milliseconds.ToString();
 
         }
 
