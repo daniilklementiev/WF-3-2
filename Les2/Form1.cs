@@ -2,33 +2,43 @@ namespace Les2
 {
     public partial class Form1 : Form
     {
+        int X = 0;
+        int Y = 0;
         public Form1()
         {
             InitializeComponent();
+            
         }
         // при нажатии на стрелки или клавиши ASDW окно перемещается в нужную сторону на 50 пикселей и не заходит за рамки экрана
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
+            Point? newLoc = null!;
+
+            if (e.KeyCode == Keys.Up)
             {
-                if (this.Left > 0)
-                    this.Left -= 50;
+                newLoc = new Point(this.Location.X, this.Location.Y - 50);
             }
-            if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.Down)
             {
-                if (this.Left + this.Width < Screen.PrimaryScreen.Bounds.Width)
-                    this.Left += 50;
+                newLoc = new Point(this.Location.X, this.Location.Y + 50);
             }
-            if (e.KeyCode == Keys.W || e.KeyCode == Keys.Up)
+            else if (e.KeyCode == Keys.Left)
             {
-                if (this.Top > 0)
-                    this.Top -= 50;
+                newLoc = new Point(this.Location.X - 50, this.Location.Y);
             }
-            if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
+            else if (e.KeyCode == Keys.Right)
             {
-                if (this.Top + this.Height < Screen.PrimaryScreen.Bounds.Height)
-                    this.Top += 50;
+                newLoc = new Point(this.Location.X + 50, this.Location.Y);
             }
+
+            if (newLoc.HasValue)
+            {
+                    if (Screen.PrimaryScreen.Bounds.Contains(new Rectangle(newLoc.Value, this.Size)))
+                    {
+                        this.Location = newLoc.Value;
+                    }
+            }
+
         }
 
     }
